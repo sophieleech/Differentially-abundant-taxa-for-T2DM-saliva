@@ -115,14 +115,14 @@ for (taxon in taxo_level_names) {
 
 ####### ANCOM-BC2 ########
 n = 3
-for (categ in taxa.cat) {
+for (categ in taxo_level_names) {
 	####workaround to prevent error for non-unique taxonomy names 
 	if (categ != "Species") {
-		taxo_level <- aggregate_taxa(ps_object, level = categ)
+		taxo_level <- aggregate_taxa(filtered, level = categ)
 		colnames(taxo_level@tax_table)[n] <- categ
 		colnames(taxo_level@tax_table)[n-1] <- "ignore"
 	} else {
-		taxo_level <- aggregate_taxa(ps_object, level = categ)
+		taxo_level <- aggregate_taxa(filtered, level = categ)
 	}
 	###get "counts" by multiplying by library size 
 	taxo_level@otu_table <- (t(taxo_level@otu_table)/100)*(taxo_level@sam_data$Library)
@@ -148,8 +148,8 @@ for (categ in taxa.cat) {
 
 ####### ALDEX-2 #########
 n = 3
-for (taxon in taxa.cat) {
-	taxo_level <- aggregate_taxa(ps_object, level = taxon)
+for (taxon in taxo_level_names) {
+	taxo_level <- aggregate_taxa(filtered, level = taxon)
 	
 	###get "counts" by multiplying by library size 
 	taxo_level@otu_table <- (t(taxo_level@otu_table)/100)*(taxo_level@sam_data$Library)
@@ -186,8 +186,8 @@ for (taxon in taxa.cat) {
 ### for BMI analysis ###
 
 n = 3
-for (taxon in taxa.cat) {
-	taxo_level <- aggregate_taxa(ps_object, level = taxon)
+for (taxon in taxo_level_names) {
+	taxo_level <- aggregate_taxa(filtered, level = taxon)
 	
 	###get "counts" by multiplying by library size 
 	taxo_level@otu_table <- (t(taxo_level@otu_table)/100)*(taxo_level@sam_data$Library)
@@ -217,8 +217,8 @@ for (taxon in taxa.cat) {
 ######### LinDA ###########
 #### Method 1 - proportions ###
 n = 3
-for (taxon in taxa.cat) {
-	taxo_level <- aggregate_taxa(ps_object, level = taxon)
+for (taxon in taxo_level_names) {
+	taxo_level <- aggregate_taxa(filtered, level = taxon)
 	otu.tab <- (taxo_level@otu_table)/100
 	
 	meta <- cbind.data.frame(Diabetes = taxo_level@sam_data$Diabetes_status,
@@ -239,8 +239,8 @@ n = n + 1
 #### Method 2 - counts ####
 
 n = 3
-for (taxon in taxa.cat) {
-	taxo_level <- aggregate_taxa(ps_object, level = taxon)
+for (taxon in taxo_level_names) {
+	taxo_level <- aggregate_taxa(filtered, level = taxon)
 	###get "counts" by multiplying by library size 
   otu.tab <- round(t((t(taxo_level@otu_table)/100)*(taxo_level@sam_data$Library)))
   otu.tab <- as.data.frame(otu.tab)
@@ -262,8 +262,8 @@ for (taxon in taxa.cat) {
 
 #### DESeq2 #######
 n = 3
-for (taxon in taxa.cat) {
-	taxo_level <- aggregate_taxa(ps_object, level = taxon)
+for (taxon in taxo_level_names) {
+	taxo_level <- aggregate_taxa(filtered, level = taxon)
 	
 	###get "counts" by multiplying by library size 
 	taxo_level@otu_table <- (t(taxo_level@otu_table)/100)*(taxo_level@sam_data$Library)
@@ -304,8 +304,8 @@ for (taxon in taxa.cat) {
 ####### ZicoSeq ##########
 
 n = 3
-for (taxon in taxa.cat) {
-	taxo_level <- aggregate_taxa(ps_object, level = taxon)
+for (taxon in taxo_level_names) {
+	taxo_level <- aggregate_taxa(filtered, level = taxon)
 	taxo_level@otu_table <- (taxo_level@otu_table)/100
 	test <- as.matrix(taxo_level@otu_table)
 	#prune all zeros 
@@ -361,8 +361,8 @@ for (taxon in taxa.cat) {
 
 ### Method 2 - counts ###
 n = 3
-for (taxon in taxa.cat) {
-	taxo_level <- aggregate_taxa(ps_object, level = taxon)
+for (taxon in taxo_level_names) {
+	taxo_level <- aggregate_taxa(filtered, level = taxon)
 	taxo_level@otu_table <- t((t(taxo_level@otu_table)/100)*(taxo_level@sam_data$Library))
 	test <- as.matrix(taxo_level@otu_table)
 	#prune all zeros 
